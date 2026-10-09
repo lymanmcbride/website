@@ -17,6 +17,8 @@ export const siteContent = {
   aboutBackground: asset(""),
   // Full-page background on Events
   eventsBackground: asset(""),
+  // Public Google Calendar that feeds the Events page
+  calendarId: "cf5d99355bf9224d0cdd56672025fcdeb9a9c72e61b98d05cd0ca10b4a9c3f1e@group.calendar.google.com",
   credits: [],
   recordings: [],
   youtubeId: "",
