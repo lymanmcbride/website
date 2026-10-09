@@ -9,13 +9,15 @@ const Photo = styled.img`
   display: block;
   width: 100%;
   height: auto;
+  max-height: 60dvh;
+  object-fit: cover;
   margin-bottom: 1.5rem;
 `
 
 const PhotoSlot = styled.div`
   width: 100%;
   aspect-ratio: 4 / 5;
-  max-height: 28rem;
+  max-height: 60dvh;
   background: ${({ theme }) => theme.colors.surface};
   margin-bottom: 1.5rem;
 `
