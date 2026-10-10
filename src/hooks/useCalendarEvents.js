@@ -2,6 +2,44 @@ import { useCallback, useEffect, useState } from 'react'
 
 const API_KEY = import.meta.env.VITE_GCAL_API_KEY
 
+const decodeEntities = (text) =>
+  text
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, ' ')
+
+// Google Calendar has no CTA field, so the button comes from the event description:
+// the first link (an <a href> inserted in the editor, or a bare URL) becomes the CTA.
+// The link text is the button label ("Get Tickets"); a bare URL falls back to "Learn More".
+// The remaining text, with the link and HTML removed, becomes the short description.
+export function parseDescription(raw = '') {
+  let cta = null
+  let text = raw
+
+  const anchor = text.match(/<a\s[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i)
+  if (anchor) {
+    const label = decodeEntities(anchor[2].replace(/<[^>]*>/g, '')).trim()
+    cta = { url: decodeEntities(anchor[1]), label: label && !/^https?:/i.test(label) ? label : 'Learn More' }
+    text = text.replace(anchor[0], ' ')
+  } else {
+    const bare = text.match(/https?:\/\/[^\s<"']+/)
+    if (bare) {
+      cta = { url: bare[0], label: 'Learn More' }
+      text = text.replace(bare[0], ' ')
+    }
+  }
+
+  const description = decodeEntities(text.replace(/<br\s*\/?>|<\/p>|<\/div>/gi, '\n').replace(/<[^>]*>/g, ''))
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\s*\n\s*/g, ' ')
+    .trim()
+
+  return { cta, description }
+}
+
 // Fetches upcoming events (today onward, soonest first) from a public Google Calendar.
 // Only runs when the component using it mounts, so other pages never call the API.
 export function useCalendarEvents(calendarId) {
@@ -34,8 +72,7 @@ export function useCalendarEvents(calendarId) {
             id: item.id,
             title: item.summary || 'Untitled event',
             location: item.location || '',
-            description: item.description || '',
-            url: item.htmlLink,
+            ...parseDescription(item.description),
             allDay: Boolean(item.start?.date),
             start: new Date(item.start?.dateTime ?? `${item.start?.date}T00:00:00`),
           }))

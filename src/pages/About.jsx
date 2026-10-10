@@ -22,16 +22,11 @@ const PhotoSlot = styled.div`
   margin-bottom: 1.5rem;
 `
 
-const Credits = styled.section`
-  margin-top: 2rem;
-`
-
 const list = (value) => (Array.isArray(value) ? value.filter(Boolean) : [])
 
 export function About() {
-  const { photoPath, aboutBackground, bio, credits } = siteContent
+  const { photoPath, aboutBackground, bio } = siteContent
   const paragraphs = list(bio)
-  const creditList = list(credits)
 
   return (
     <BackgroundImage
@@ -53,18 +48,6 @@ export function About() {
             <Muted>Bio</Muted>
           )}
         </section>
-        <Credits aria-label="Credits">
-          <h2>Credits</h2>
-          {creditList.length > 0 ? (
-            <ul>
-              {creditList.map((credit) => (
-                <li key={credit}>{credit}</li>
-              ))}
-            </ul>
-          ) : (
-            <Muted>Credits</Muted>
-          )}
-        </Credits>
       </Container>
     </BackgroundImage>
   )
