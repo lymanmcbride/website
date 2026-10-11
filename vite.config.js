@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // Project site is served from https://lymanmcbride.github.io/website/
-  base: '/website/',
+  // Served from the root of the custom domain
+  base: '/',
   plugins: [react()],
 })
