@@ -27,6 +27,7 @@ export function Nav() {
     <Bar aria-label="Primary">
       <NavLink to="/" end>Home</NavLink>
       <NavLink to="/about">About</NavLink>
+      <NavLink to="/listen">Listen</NavLink>
       <NavLink to="/events">Events</NavLink>
     </Bar>
   )
