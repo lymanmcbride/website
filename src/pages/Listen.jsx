@@ -20,7 +20,8 @@ const Ensemble = styled.section`
 `
 
 const Group = styled.section`
-  @media (min-width: 44rem) {
+  /* Two 20rem columns + 2.5rem gap + 3rem page padding */
+  @media (min-width: 45.5rem) {
     ${({ $rowSpan }) => $rowSpan && `grid-row: span ${$rowSpan};`}
   }
 `
@@ -39,7 +40,7 @@ const Item = styled.li`
     border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
 
-  h2 {
+  h3 {
     margin: 0 0 0.75rem;
     font-size: 1.25rem;
     font-weight: 500;
@@ -102,7 +103,7 @@ const hasMedia = (r) => r?.id || r?.spotifyId
 function Recording({ id, spotifyId, title, description }) {
   return (
     <Item>
-      <h2>{title}</h2>
+      <h3>{title}</h3>
       {id ? (
         <Player
           src={`https://www.youtube-nocookie.com/embed/${id}`}
@@ -145,9 +146,8 @@ export function Listen() {
     >
       <Wide>
         <h1>Listen</h1>
-        {groups.length === 0 ? (
-          <p>No recordings yet.</p>
-        ) : (
+        {groups.length === 0 && albums.length === 0 && <p>No recordings yet.</p>}
+        {groups.length > 0 && (
           <Columns>
             {groups.map(({ heading, recordings, cta, rowSpan }) => (
               <Group key={heading} aria-label={heading} $rowSpan={rowSpan}>
