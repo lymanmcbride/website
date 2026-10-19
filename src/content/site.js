@@ -53,6 +53,7 @@ export const siteContent = {
   // Albums where Lyman played as an ensemble member (not soloist), shown full-width on Listen.
   // Each album is { title, spotifyAlbumId } or { title, appleMusicPath } (path after music.apple.com/).
   ensembleAlbums: [
+    { title: "Legends of Deseret", spotifyAlbumId: "2F32IX2J0X42aAOiuSKYE3" },
     { title: "Downtime: Live on Tour in the Baltic States & Scandinavia", spotifyAlbumId: "3UgDX5STroH22jWLkcZefF" },
     { title: "Timeless: Wind Band Dances & Other Concert Favorites", spotifyAlbumId: "0ym8SXqS2gXurcqDIuzqLm" },
   ],
