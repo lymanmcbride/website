@@ -68,6 +68,11 @@ const AudioPlayer = styled.iframe`
   border-radius: 12px;
 `
 
+const AudioFilePlayer = styled.audio`
+  display: block;
+  width: 100%;
+`
+
 const AlbumPlayer = styled.iframe`
   display: block;
   width: 100%;
@@ -93,18 +98,22 @@ const Cta = styled.a`
   border-bottom: 1px solid currentColor;
   padding-bottom: 0.125rem;
 
+  ${Item} & {
+    margin-top: 0.75rem;
+  }
+
   &:hover {
     opacity: 0.75;
   }
 `
 
-const hasMedia = (r) => r?.id || r?.spotifyId
+const hasMedia = (r) => r?.id || r?.spotifyId || r?.audioSrc
 
-function Recording({ id, spotifyId, title, description }) {
+function Recording({ id, spotifyId, audioSrc, title, description, cta }) {
   return (
     <Item>
       <h3>{title}</h3>
-      {id ? (
+      {id && (
         <Player
           src={`https://www.youtube-nocookie.com/embed/${id}`}
           title={title}
@@ -112,7 +121,8 @@ function Recording({ id, spotifyId, title, description }) {
           allow="encrypted-media; picture-in-picture; fullscreen"
           allowFullScreen
         />
-      ) : (
+      )}
+      {spotifyId && (
         <AudioPlayer
           src={`https://open.spotify.com/embed/track/${spotifyId}`}
           title={title}
@@ -120,7 +130,15 @@ function Recording({ id, spotifyId, title, description }) {
           allow="encrypted-media; clipboard-write"
         />
       )}
+      {audioSrc && (
+        <AudioFilePlayer controls preload="metadata" src={audioSrc} aria-label={title} />
+      )}
       {description && <p>{description}</p>}
+      {cta && (
+        <Cta href={cta.url} target="_blank" rel="noopener noreferrer">
+          {cta.label} →
+        </Cta>
+      )}
     </Item>
   )
 }
@@ -154,7 +172,7 @@ export function Listen() {
                 <h2>{heading}</h2>
                 <List>
                   {recordings.map((recording) => (
-                    <Recording key={recording.id ?? recording.spotifyId} {...recording} />
+                    <Recording key={recording.id ?? recording.spotifyId ?? recording.audioSrc} {...recording} />
                   ))}
                 </List>
                 {cta && (
