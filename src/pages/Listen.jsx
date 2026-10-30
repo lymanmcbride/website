@@ -113,7 +113,7 @@ function Recording({ id, spotifyId, audioSrc, title, description, cta }) {
   return (
     <Item>
       <h3>{title}</h3>
-      {id ? (
+      {id && (
         <Player
           src={`https://www.youtube-nocookie.com/embed/${id}`}
           title={title}
@@ -121,16 +121,18 @@ function Recording({ id, spotifyId, audioSrc, title, description, cta }) {
           allow="encrypted-media; picture-in-picture; fullscreen"
           allowFullScreen
         />
-      ) : spotifyId ? (
+      )}
+      {spotifyId && (
         <AudioPlayer
           src={`https://open.spotify.com/embed/track/${spotifyId}`}
           title={title}
           loading="lazy"
           allow="encrypted-media; clipboard-write"
         />
-      ) : audioSrc ? (
+      )}
+      {audioSrc && (
         <AudioFilePlayer controls preload="metadata" src={audioSrc} aria-label={title} />
-      ) : null}
+      )}
       {description && <p>{description}</p>}
       {cta && (
         <Cta href={cta.url} target="_blank" rel="noopener noreferrer">
