@@ -13,7 +13,7 @@ export const BackgroundImage = styled.section`
   background-color: ${({ theme }) => theme.colors.dark};
   background-image: ${({ $image, $overlay, theme }) =>
     $image ? `${$overlay || theme.overlay.hero}, url(${$image})` : 'none'};
-  background-position: center;
+  background-position: ${({ $position }) => $position || 'center'};
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: ${({ $fixed }) => ($fixed ? 'fixed' : 'scroll')};

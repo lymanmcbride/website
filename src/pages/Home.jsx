@@ -4,7 +4,7 @@ import { siteContent } from '../content/site'
 
 export function Home() {
   return (
-    <BackgroundImage as="main" $image={siteContent.heroImage} $align="flex-end">
+    <BackgroundImage as="main" $image={siteContent.heroImage} $align="flex-end" $position="center 40%">
       <div>
         <Display>Lyman McBride</Display>
         <Eyebrow>Trombone</Eyebrow>
