@@ -1,4 +1,4 @@
-import portrait from "../assets/mcbride2019-14.jpg"
+import portrait from "../assets/mcbride2019-114.jpg"
 import heroPhoto from "../assets/mcbride2019-11.jpg"
 
 // Resolves a file in public/ (e.g. "images/hero.jpg") against the deploy base path.
