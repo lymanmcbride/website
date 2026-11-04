@@ -11,6 +11,7 @@ const Photo = styled.img`
   height: auto;
   max-height: 60dvh;
   object-fit: cover;
+  object-position: top;
   margin-bottom: 1.5rem;
 `
 
